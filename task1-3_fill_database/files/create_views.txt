@@ -1,0 +1,51 @@
+DROP VIEW IF EXISTS BookingDetails
+
+;
+
+CREATE VIEW BookingDetails AS
+SELECT
+	p.id_provider,
+	p.provider_name,
+	cnt.country_name,
+	cit.city_name,
+	b.creation_date,
+	b.start_date,
+	b.nights,
+	CAST(b.price AS MONEY) price,
+	b.id_currency,
+	CAST(ROUND(b.price * ISNULL(cr.rate, 1), 2) AS MONEY) AS price_RUB
+FROM
+	booking b
+	INNER JOIN provider p ON p.id_provider = b.id_provider
+	INNER JOIN country cnt ON cnt.id_country = p.id_country
+	INNER JOIN city cit ON cit.id_city = p.id_city
+	LEFT JOIN currency_rate cr ON (
+		cr.id_currency = b.id_currency
+		AND  cr.date = b.creation_date
+	)
+
+;
+
+DROP VIEW IF EXISTS BookingChannelManagerPercent
+
+;
+
+CREATE VIEW BookingChannelManagerPercent AS  
+SELECT
+	p.id_provider,
+	MAX(p.provider_name) provider_name,
+	MAX(cnt.country_name) country_name,
+	MAX(cit.city_name) city_name,
+	YEAR(b.creation_date) year,
+	DATENAME(MONTH, b.creation_date) month,
+	CAST(CAST(SUM(IIF(s.source_name = 'BS-CHANNEL_MANAGER', 1, 0)) AS FLOAT) / COUNT(*) * 100 AS DECIMAL(18,2)) percent_channel_manager ,
+	CAST(CAST(SUM(IIF(s.source_name = 'BS-CHANNEL_MANAGER' AND b.creator = 'BGC', 1, 0)) AS FLOAT) / COUNT(*) * 100 AS DECIMAL(18,2)) percent_bgc
+FROM
+	booking b
+	INNER JOIN provider p ON p.id_provider = b.id_provider
+	INNER JOIN country cnt ON cnt.id_country = p.id_country
+	INNER JOIN city cit ON cit.id_city = p.id_city
+	INNER JOIN source s ON s.id_source = b.id_source
+GROUP BY
+	p.id_provider, YEAR(b.creation_date), DATENAME(MONTH, b.creation_date)
+;
