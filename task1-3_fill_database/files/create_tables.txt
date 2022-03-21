@@ -7,59 +7,59 @@ DROP TABLE IF EXISTS source;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'booking')
 BEGIN
-	CREATE TABLE [dbo].[booking](
-		id_booking [int] IDENTITY PRIMARY KEY,
-		id_provider [int] NOT NULL,
-		creation_date [date] NOT NULL,
-		start_date [date] NOT NULL,
-		status [int] NOT NULL,
-		nights [int] NOT NULL,
-		price [float] NOT NULL,
-		id_currency [nvarchar] (3) NOT NULL,
-		id_source [int] NOT NULL,
-		creator [nvarchar](3) NOT NULL
-	)
+    CREATE TABLE [dbo].[booking](
+        id_booking [int] IDENTITY PRIMARY KEY,
+        id_provider [int] NOT NULL,
+        creation_date [date] NOT NULL,
+        start_date [date] NOT NULL,
+        status [int] NOT NULL,
+        nights [int] NOT NULL,
+        price [float] NOT NULL,
+        id_currency [nvarchar] (3) NOT NULL,
+        id_source [int] NOT NULL,
+        creator [nvarchar](3) NOT NULL
+    )
 END;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'provider')
 BEGIN
-	CREATE TABLE [dbo].[provider](
-		id_provider [int] IDENTITY PRIMARY KEY,
-		id_country  [int] NOT NULL,
-		id_city  [int] NOT NULL,
-		provider_name  [nvarchar](100) NOT NULL
-	)
+    CREATE TABLE [dbo].[provider](
+        id_provider [int] IDENTITY PRIMARY KEY,
+        id_country [int] NOT NULL,
+        id_city [int] NOT NULL,
+        provider_name [nvarchar](100) NOT NULL
+    )
 END;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'country')
-	BEGIN
-	CREATE TABLE [dbo].[country](
-		id_country [int] IDENTITY PRIMARY KEY,
-		country_name  [nvarchar](100) NOT NULL
-	)
+    BEGIN
+    CREATE TABLE [dbo].[country](
+        id_country [int] IDENTITY PRIMARY KEY,
+        country_name [nvarchar](100) NOT NULL
+    )
 END;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'city')
 BEGIN
-	CREATE TABLE [dbo].[city](
-		id_city [int] IDENTITY PRIMARY KEY,
-		city_name  [nvarchar](100) NOT NULL
-	)
+    CREATE TABLE [dbo].[city](
+        id_city [int] IDENTITY PRIMARY KEY,
+        city_name [nvarchar](100) NOT NULL
+    )
 END;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'source')
 BEGIN
-	CREATE TABLE [dbo].[source](
-		id_source [int] IDENTITY PRIMARY KEY,
-		source_name  [nvarchar](100) NOT NULL
-	)
+    CREATE TABLE [dbo].[source](
+        id_source [int] IDENTITY PRIMARY KEY,
+        source_name [nvarchar](100) NOT NULL
+    )
 END;
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'currency_rate')
 BEGIN
-	CREATE TABLE [dbo].[currency_rate](
-		id_currency [char](3) NOT NULL,
-		[date] [datetime] NOT NULL,
-		[rate] [float] NOT NULL
-	)
+    CREATE TABLE [dbo].[currency_rate](
+        id_currency [char](3) NOT NULL,
+        [date] [datetime] NOT NULL,
+        [rate] [float] NOT NULL
+    )
 END;

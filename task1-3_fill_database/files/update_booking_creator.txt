@@ -4,11 +4,11 @@ UPDATE booking
 SET creator = 'BGC'
 WHERE id_booking IN (
     SELECT TOP 33 PERCENT b.id_booking
-	FROM
-		booking b
-		INNER JOIN source s ON (
-			s.id_source = b.id_source
-			AND s.source_name = 'BS-CHANNEL_MANAGER'
-		)
-	ORDER BY NEWID()
+    FROM
+        booking b
+        INNER JOIN source s ON (
+            s.id_source = b.id_source
+            AND s.source_name = 'BS-CHANNEL_MANAGER'
+        )
+    ORDER BY NEWID()
 )
