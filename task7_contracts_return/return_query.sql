@@ -46,4 +46,9 @@ FROM
 WHERE
 	DATEDIFF(month, t.StartDate, t2.EndDate) < 6
 	AND t.StartDate > t2.EndDate
+
+	-- Сейчас запрос выводит кол-во вернувшихся за все время.
+	-- Можно добавить фильтр, чтобы отображались те, у кого сейчас действует договор.
+	-- AND t.StartDate <= CAST(GETDATE() AS DATE)
+	-- AND t.EndDate > CAST(GETDATE() AS DATE)
 ;
